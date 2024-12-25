@@ -1,0 +1,21 @@
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local deposit = true
+
+coroutine.wrap(function()
+    while true do
+        if not deposit then wait(1) continue end
+
+        local Event = ReplicatedStorage.Remotes.BankInteraction
+        Event:FireServer("Deposit", game.Players.LocalPlayer.leaderstats.Time.Value)
+        wait(0.01)
+    end
+end)()
+
+UserInputService.InputBegan:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.E then
+        deposit = not deposit
+    end
+end)
